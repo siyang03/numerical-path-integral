@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (MiKTeX 24.4) (preloaded format=xelatex 2024.12.18)  3 JUN 2025 19:23
+This is XeTeX, Version 3.141592653-2.6-0.999996 (MiKTeX 24.4) (preloaded format=xelatex 2024.12.18)  3 JUN 2025 20:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1176,11 +1176,18 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 \tf@toc=\write5
 \openout5 = `"Path Integral Numerically.toc"'.
 
+File: figures/path integral numerically (normalized) of a free particle with in
+itial state as a Gaussian wave packet and T=0.1 (L=300, M=9000, N=4).pdf Graphi
+c file (type pdf)
+<use figures/path integral numerically (normalized) of a free particle with ini
+tial state as a Gaussian wave packet and T=0.1 (L=300, M=9000, N=4).pdf>
 
 
 [1
 
-] (Path Integral Numerically.aux)
+]
+
+[2] (Path Integral Numerically.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 1
 L3 programming layer <2022/08/05>
@@ -1190,12 +1197,12 @@ nged.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 30516 strings out of 408758
- 644964 string characters out of 5747445
- 1066014 words of memory out of 5000000
- 52978 multiletter control sequences out of 15000+600000
+ 30552 strings out of 408758
+ 646981 string characters out of 5747445
+ 1067014 words of memory out of 5000000
+ 53012 multiletter control sequences out of 15000+600000
  570785 words of font info for 98 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 98i,12n,101p,567b,337s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 98i,12n,101p,567b,483s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Path Integral Numerically.pdf (1 page).
+Output written on Path Integral Numerically.pdf (2 pages).
