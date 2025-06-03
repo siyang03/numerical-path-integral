@@ -118,13 +118,13 @@
 		\item 数值计算中, 令
 		\begin{equation}
 			\begin{dcases}
-				x_i = \Big( \frac{i}{2 M} - 1 \Big) L, \Delta x = \frac{L}{2 M}, i = 1, \cdots, M \\
+				x_i = \Big( \frac{2 i}{M} - 1 \Big) L, \Delta x = \frac{2 L}{M}, i = 0, \cdots, M \\
 				K_{i j} = \braket{x_i | e^{- i H \Delta t} | x_j} = \sqrt{\frac{m}{2 \pi i \Delta t}} \exp \Big( i \Big( \frac{m}{2} \frac{(x_i - x_j)^2}{\Delta t} - \Delta t V(x_i) \Big) \Big)
 			\end{dcases},
 		\end{equation}
 		那么
 		\begin{equation}
-			\braket{x | e^{- i H T} | \psi_0} = \lim_{L, M, N \rightarrow \infty} (\Delta x)^{N + 1} \sum_{j = 1}^M (K^{N + 1})_{i j} \psi_0(x_j), \quad \text{with} \quad x_i = x.
+			\braket{x | e^{- i H T} | \psi_0} = \lim_{L, M, N \rightarrow \infty} (\Delta x)^{N + 1} \sum_{j = 0}^M (K^{N + 1})_{i j} \psi_0(x_j), \quad \text{with} \quad x_i = x \ll L.
 		\end{equation}
 	\end{itemize}
 	
