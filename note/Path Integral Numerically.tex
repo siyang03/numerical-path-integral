@@ -83,6 +83,14 @@
 % use \, in math environment
 % except for texts embeded in math environment, use \ instead
 %----------------------------------------------------------------------
+\usepackage{listings}
+\lstset{
+	frame=single,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\ttfamily,
+}
+%----------------------------------------------------------------------
 \usepackage{orcidlink}
 %----------------------------------------------------------------------
 \title{\Huge \textbf{Path Integral Numerically}}
@@ -95,7 +103,7 @@
 	\pdfbookmark{\contentsname}{toc} % add pdf bookmark to the ToC
 	\tableofcontents
 	
-	\section{path integral}
+	\section{path integral in quantum mechanics}
 	\begin{itemize}
 		\item 考虑系统的 Hamiltonian 为
 		\begin{equation}
@@ -123,7 +131,7 @@
 			\end{dcases},
 		\end{equation}
 		那么
-		\begin{equation}
+		\begin{equation} \label{1.5}
 			\braket{x | e^{- i H T} | \psi_0} = \lim_{L, M, N \rightarrow \infty} (\Delta x)^{N + 1} \sum_{j = 0}^M (K^{N + 1})_{i j} \psi_0(x_j), \quad \text{with} \quad x_i = x \ll L.
 		\end{equation}
 	\end{itemize}
@@ -139,12 +147,40 @@
 			\psi(t, x) = \Big( \frac{2}{\pi} \Big)^{\frac{1}{4}} \sqrt{\frac{m}{m + 2 i t}} \exp \Big( \frac{m}{m + 2 i t} (- x^2 + i k_0 x) - i \frac{k_0^2}{2 (m + 2 i t)} t \Big).
 		\end{equation}
 		
+		\item 计算 \eqref{1.5} 最快 (且节省内存) 的方法是:
+		\begin{lstlisting}
+psi_final = psi_0
+for i in range(N+1):
+	psi_final = dx * K @ psi_final
+		\end{lstlisting}
+		不推荐以下两种方法 (在 $T = 0.1, L = 300, M = 9000, N = 1$ 时可以得到较准确的波形):
+		\begin{lstlisting}
+K_power = K
+for i in range(N):
+	K_power = K @ K_power
+psi_final = dx**(N + 1) * K_power @ psi_0
+		\end{lstlisting}
+		和
+		\begin{lstlisting}
+K_power = np.linalg.matrix_power(K, N + 1)
+psi_final = dx**(N + 1) * K_power @ psi_0
+		\end{lstlisting}
+		
 		\item 用路径积分数值计算得到的结果如下图所示 ($A = \int dx \, \rho$ 是 normalization constant):
 		
 		\begin{figure}[H]
 			\centering
-			\includegraphics[scale=0.8]{figures/path integral numerically (normalized) of a free particle with initial state as a Gaussian wave packet and T=0.1 (L=300, M=9000, N=4).pdf}
-			\caption{path integral numerically (normalized, $A \sim 10^{11}$) with $T = 0.1$.}
+			\begin{subfigure}{0.4\linewidth}
+				\centering
+				\includegraphics[scale=0.8]{figures/path integral numerically (normalized) of a free particle with initial state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf}
+				\caption{$T = 0.1$ and $A \sim 10^{11}$.}
+			\end{subfigure}
+			\begin{subfigure}{0.4\linewidth}
+				\centering
+				\includegraphics[scale=0.8]{figures/path integral numerically (normalized) of a free particle with initial state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf}
+				\caption{$T = 0.1$ and $A \sim 10^{11}$.}
+			\end{subfigure}
+			\caption{path integral numerically.}
 		\end{figure}
 	\end{itemize}
 \end{document}
