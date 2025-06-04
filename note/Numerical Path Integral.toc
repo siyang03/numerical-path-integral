@@ -1,2 +1,4 @@
 \contentsline {section}{\numberline {1}path integral in quantum mechanics}{1}{section.1}%
 \contentsline {subsection}{\numberline {1.1}Gaussian wave packet}{1}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}harmonic oscillator and coherent states}{2}{subsection.1.2}%
+\contentsline {section}{\numberline {A}the coherent states}{3}{appendix.A}%

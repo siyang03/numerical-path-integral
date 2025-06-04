@@ -168,7 +168,7 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 		
 		\item 另外, 根据经验, 需要有 $\big| \Delta x \sqrt{\frac{m}{2 \pi i \Delta t}} \big|^2 \ll 1$, 可以选取 $\sim 10^{- 2}$.
 		
-		\item 用路径积分数值计算得到的结果如下图所示 (其中 $A = \int dx \, \rho$ 是数值计算得到的 normalization constant):
+		\item 令 $m = k_0 = 1$, 数值计算得到的结果如下图所示 (其中 $A = \int dx \, \rho$ 是数值计算得到的 normalization constant):
 		
 		\begin{figure}[H]
 			\centering
@@ -184,5 +184,86 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 			\end{subfigure}
 			\caption{numerical path integral.}
 		\end{figure}
+	\end{itemize}
+	
+	\subsection{harmonic oscillator and coherent states}
+	\begin{itemize}
+		\item 考虑谐振子的 coherent states,
+		\begin{equation}
+			\begin{dcases}
+				\psi^{(\alpha)}(t, x) = \Big( \frac{m \omega}{\pi} \Big)^{\frac{1}{4}} \exp \Big( - \frac{m \omega}{2} (x - \braket{x})^2 + i \braket{p} x + i \theta(t) \Big) \\
+				\braket{x} = \sqrt{\frac{2}{m \omega}} \mathrm{Re}(\alpha e^{- i \omega t}), \braket{p} = \sqrt{2 m \omega} \mathrm{Im}(\alpha e^{- i \omega t}) \\
+				\theta(t) = - \frac{\omega t}{2} - \mathrm{Re}(\alpha e^{- i \omega t}) \mathrm{Im}(\alpha e^{- i \omega t})
+			\end{dcases},
+		\end{equation}
+		其中 $\alpha \in \mathbb{C}$.
+		
+		\item 令 $m = \omega = 1$, 考虑初始条件为
+		\begin{equation}
+			\alpha = |\alpha| = 1
+		\end{equation}
+		的情况.
+		
+		\item 计算中可以让
+		\begin{equation}
+			K_{i j} = \sqrt{\frac{m}{2 \pi i \Delta t}} \exp \Big( i \frac{m}{2} \frac{(x_i - x_j)^2}{\Delta t} \Big) \frac{e^{- i \Delta t V(x_i)} + e^{- i \Delta t V(x_j)}}{2},
+		\end{equation}
+		这对数值结果有微小的改进.
+		
+		\item 数值计算结果如下:
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.8]{figures/numerical path integral (normalized) of a harmonic oscillator with initial state as a coherent state and T=frac{pi}{2} (L=30, M=16000, N=15).pdf}
+			\caption{numerical path integral at $T = \frac{\pi}{2}$.}
+		\end{figure}
+		
+		注意到, coherent state 用路径积分数值计算得到的结果具有准确的归一化系数 $A = 1$.
+	\end{itemize}
+	
+	\appendix
+	\renewcommand{\sectionmark}[1]{%
+		\markboth{Appendix \thesection\ #1}{}%
+	}
+	\section{the coherent states}
+	\begin{itemize}
+		\item coherent states 是 annihilation operator 的本征态
+		\begin{equation}
+			\begin{dcases}
+				a \ket{\alpha} = \alpha \ket{\alpha}, \alpha \in \mathbb{C} \\
+				\ket{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{0}
+			\end{dcases}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=proof:]
+			\begin{equation}
+				\begin{dcases}
+					[a, (\alpha a^\dag - \alpha^* a)^n] = n \alpha (\alpha a^\dag - \alpha^* a)^{n - 1} \\
+					[a^\dag, (\alpha a^\dag - \alpha^* a)^n] = n \alpha^* (\alpha a^\dag - \alpha^* a)^{n - 1}
+				\end{dcases} \Longrightarrow \begin{dcases}
+					[a, e^{\alpha a^\dag - \alpha^* a}] = \alpha e^{\alpha a^\dag - \alpha^* a} \\
+					[a^\dag, e^{\alpha a^\dag - \alpha^* a}] = \alpha^* e^{\alpha a^\dag - \alpha^* a}
+				\end{dcases},
+			\end{equation}
+			因此
+			\begin{equation}
+				\begin{dcases}
+					a \ket{\alpha} = \cdots \\
+					a^\dag \ket{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{1} + \alpha^* \ket{\alpha}
+				\end{dcases}.
+			\end{equation}
+		\end{tcolorbox}
+		
+		\item 并且
+		\begin{equation}
+			\begin{dcases}
+				\braket{n | \alpha} = \\
+				\braket{\alpha | \beta} = e^{- \frac{1}{2} (|\alpha|^2 + |\beta|^2 - 2 \alpha^* \beta)}
+			\end{dcases}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=calculation:]
+			content...
+		\end{tcolorbox}
 	\end{itemize}
 \end{document}
