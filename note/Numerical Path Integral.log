@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.6.4)  4 JUN 2025 07:57
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.6.4)  4 JUN 2025 08:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"./Path Integral Numerically.tex"
-(Path Integral Numerically.tex
+**"./Numerical Path Integral.tex"
+(Numerical Path Integral.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-04-29>
 (C:\Users\siyang\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
@@ -1058,8 +1058,8 @@ File: pgfmoduleparser.code.tex 2023-01-15 v3.1.10 (3.1.10)
 \pgf@lib@svg@max@num=\count383
 ))
 \@curXheight=\skip82
-) (Path Integral Numerically.aux)
-\openout1 = `"Path Integral Numerically.aux"'.
+) (Numerical Path Integral.aux)
+\openout1 = `"Numerical Path Integral.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 100.
 LaTeX Font Info:    ... okay on input line 100.
@@ -1117,9 +1117,9 @@ LaTeX Font Info:    ... okay on input line 100.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 Package hyperref Info: Link coloring ON on input line 100.
-(Path Integral Numerically.out) (Path Integral Numerically.out)
+(Numerical Path Integral.out) (Numerical Path Integral.out)
 \@outlinefile=\write4
-\openout4 = `"Path Integral Numerically.out"'.
+\openout4 = `"Numerical Path Integral.out"'.
 
 
 Package fontspec Info: 
@@ -1207,43 +1207,43 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 10
 (C:\Users\siyang\AppData\Local\Programs\MiKTeX\tex/latex/jknappen\ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
-(Path Integral Numerically.toc)
+(Numerical Path Integral.toc)
 \tf@toc=\write5
-\openout5 = `"Path Integral Numerically.toc"'.
+\openout5 = `"Numerical Path Integral.toc"'.
 
 
 
 [1
 
 ]
-File: figures/path integral numerically (normalized) of a free particle with in
-itial state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf Graph
-ic file (type pdf)
-<use figures/path integral numerically (normalized) of a free particle with ini
-tial state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf>
-File: figures/path integral numerically (normalized) of a free particle with in
-itial state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf Graphi
-c file (type pdf)
-<use figures/path integral numerically (normalized) of a free particle with ini
-tial state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf>
+File: figures/numerical path integral (normalized) of a free particle with init
+ial state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf Graphic
+ file (type pdf)
+<use figures/numerical path integral (normalized) of a free particle with initi
+al state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf>
+File: figures/numerical path integral (normalized) of a free particle with init
+ial state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf Graphic 
+file (type pdf)
+<use figures/numerical path integral (normalized) of a free particle with initi
+al state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf>
 
 
-[2] (Path Integral Numerically.aux)
+[2] (Numerical Path Integral.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
  ***********
-Package rerunfilecheck Info: File `"Path Integral Numerically".out' has not cha
-nged.
+Package rerunfilecheck Info: File `"Numerical Path Integral".out' has not chang
+ed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
  31839 strings out of 405038
- 668113 string characters out of 5499091
- 1081110 words of memory out of 5000000
+ 668021 string characters out of 5499091
+ 1081098 words of memory out of 5000000
  57994 multiletter control sequences out of 15000+600000
  641486 words of font info for 112 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 98i,12n,101p,567b,1800s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 98i,12n,101p,565b,1800s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Path Integral Numerically.pdf (2 pages).
+Output written on Numerical Path Integral.pdf (2 pages).
