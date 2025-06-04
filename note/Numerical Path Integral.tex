@@ -147,7 +147,7 @@
 			\psi(t, x) = \Big( \frac{2}{\pi} \Big)^{\frac{1}{4}} \sqrt{\frac{m}{m + 2 i t}} \exp \Big( \frac{m}{m + 2 i t} (- x^2 + i k_0 x) - i \frac{k_0^2}{2 (m + 2 i t)} t \Big).
 		\end{equation}
 		
-		\item 计算 \eqref{1.5} 最快 (且节省内存) 的方法是:
+		\item 计算 \eqref{1.5} 最快 (且节省内存) 的方法是 (每一步计算都得到向量, 而不是矩阵):
 		\begin{lstlisting}
 psi_final = psi_0
 for i in range(N+1):
