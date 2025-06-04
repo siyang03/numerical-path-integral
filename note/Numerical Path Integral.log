@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.6.4)  5 JUN 2025 00:43
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.6.4)  5 JUN 2025 01:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1221,6 +1221,9 @@ ial state as a Gaussian wave packet and T=1 (L=400, M=24000, N=10).pdf Graphic
 file (type pdf)
 <use figures/numerical path integral (normalized) of a free particle with initi
 al state as a Gaussian wave packet and T=1 (L=400, M=24000, N=10).pdf>
+
+
+[2]
 File: figures/numerical path integral (normalized) of a harmonic oscillator wit
 h initial state as a coherent state and T=frac{pi}{2} (L=30, M=16000, N=15).pdf
  Graphic file (type pdf)
@@ -1228,8 +1231,6 @@ h initial state as a coherent state and T=frac{pi}{2} (L=30, M=16000, N=15).pdf
  initial state as a coherent state and T=frac{pi}{2} (L=30, M=16000, N=15).pdf>
 
 
-
-[2]
 
 [3]
 
@@ -1245,11 +1246,11 @@ ed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 31875 strings out of 405038
- 669238 string characters out of 5499091
- 1090552 words of memory out of 5000000
- 58037 multiletter control sequences out of 15000+600000
- 639549 words of font info for 103 fonts, out of 8000000 for 9000
+ 31869 strings out of 405038
+ 668982 string characters out of 5499091
+ 1091005 words of memory out of 5000000
+ 58031 multiletter control sequences out of 15000+600000
+ 641478 words of font info for 111 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  98i,19n,101p,565b,1068s stack positions out of 10000i,1000n,20000p,200000b,200000s
 

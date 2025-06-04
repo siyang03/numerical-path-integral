@@ -210,7 +210,7 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 	\renewcommand{\sectionmark}[1]{%
 		\markboth{Appendix \thesection\ #1}{}%
 	}
-	\section{coherent states}
+	\section{coherent states and displacement operators}
 	\begin{itemize}
 		\item 参考: \href{https://en.wikipedia.org/wiki/Coherent_state}{Wikipedia: Coherent state}, \href{https://en.wikipedia.org/wiki/Displacement_operator}{Wikipedia: Displacement operator}.
 		
@@ -221,7 +221,7 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 				\ket{\alpha} = D(\alpha) \ket{0}
 			\end{dcases},
 		\end{equation}
-		其中 $D(\alpha)$ 是 displacement operator,
+		其中 $D(\alpha)$ 是 displacement operators,
 		\begin{equation}
 			D(\alpha) := e^{\alpha a^\dag - \alpha^* a}.
 		\end{equation}
@@ -351,8 +351,17 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 			\begin{align}
 				\frac{\partial}{\partial \alpha} \ket{\alpha} \bra{\alpha} &= \frac{\partial}{\partial \alpha} \Big( e^{\frac{1}{2} |\alpha|^2} e^{- \alpha^* a} e^{\alpha a^\dag} \ket{0} \bra{0} e^{- \frac{1}{2} |\alpha|^2} e^{- \alpha a^\dag} e^{\alpha^* a} \Big) \notag \\
 				&= D(\alpha) \Big( \frac{1}{2} \alpha^* + a^\dag \Big) \ket{0} \bra{\alpha} + \ket{\alpha} \bra{0} \Big( - \frac{1}{2} \alpha^* - a^\dag \Big) D(- \alpha) \notag \\
-				&= D(\alpha) \ket{1} \bra{\alpha} - \ket{\alpha} \bra{1} D(- \alpha)
+				&= D(\alpha) \ket{1} \bra{\alpha}.
 			\end{align}
 		\end{tcolorbox}
+	\end{itemize}
+	
+	\section{eigenstate of the field operator \texorpdfstring{$\phi(\vec{x})$}{phi(x)}}
+	\begin{itemize}
+		\item 首先需要找到 Hermitian operator
+		\begin{equation}
+			a + a^\dag
+		\end{equation}
+		的 eigenstate.
 	\end{itemize}
 \end{document}
