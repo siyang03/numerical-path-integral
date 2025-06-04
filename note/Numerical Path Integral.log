@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.6.4)  4 JUN 2025 20:09
+This is XeTeX, Version 3.141592653-2.6-0.999997 (MiKTeX 25.4) (preloaded format=xelatex 2025.6.4)  5 JUN 2025 00:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1217,18 +1217,10 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 
 ]
 File: figures/numerical path integral (normalized) of a free particle with init
-ial state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf Graphic
- file (type pdf)
-<use figures/numerical path integral (normalized) of a free particle with initi
-al state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf>
-File: figures/numerical path integral (normalized) of a free particle with init
-ial state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf Graphic 
+ial state as a Gaussian wave packet and T=1 (L=400, M=24000, N=10).pdf Graphic 
 file (type pdf)
 <use figures/numerical path integral (normalized) of a free particle with initi
-al state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf>
-
-
-[2]
+al state as a Gaussian wave packet and T=1 (L=400, M=24000, N=10).pdf>
 File: figures/numerical path integral (normalized) of a harmonic oscillator wit
 h initial state as a coherent state and T=frac{pi}{2} (L=30, M=16000, N=15).pdf
  Graphic file (type pdf)
@@ -1237,7 +1229,13 @@ h initial state as a coherent state and T=frac{pi}{2} (L=30, M=16000, N=15).pdf
 
 
 
-[3] (Numerical Path Integral.aux)
+[2]
+
+[3]
+
+[4]
+
+[5] (Numerical Path Integral.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2022/08/05>
@@ -1247,12 +1245,12 @@ ed.
 (rerunfilecheck)             Checksum: <no file>.
  ) 
 Here is how much of TeX's memory you used:
- 31898 strings out of 405038
- 670736 string characters out of 5499091
- 1089514 words of memory out of 5000000
- 58052 multiletter control sequences out of 15000+600000
- 641486 words of font info for 112 fonts, out of 8000000 for 9000
+ 31875 strings out of 405038
+ 669238 string characters out of 5499091
+ 1090552 words of memory out of 5000000
+ 58037 multiletter control sequences out of 15000+600000
+ 639549 words of font info for 103 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 98i,12n,101p,565b,1068s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 98i,19n,101p,565b,1068s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Numerical Path Integral.pdf (3 pages).
+Output written on Numerical Path Integral.pdf (5 pages).

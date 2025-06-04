@@ -100,7 +100,7 @@
 \begin{document}
 	\maketitle
 	
-	\pdfbookmark{\contentsname}{toc} % add pdf bookmark to the ToC
+	\pdfbookmark[1]{\contentsname}{toc} % add pdf bookmark to the ToC
 	\tableofcontents
 	
 	\section{path integral in quantum mechanics}
@@ -172,17 +172,8 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 		
 		\begin{figure}[H]
 			\centering
-			\begin{subfigure}{0.4\linewidth}
-				\centering
-				\includegraphics[scale=0.8]{figures/numerical path integral (normalized) of a free particle with initial state as a Gaussian wave packet and T=0.5 (L=400, M=12000, N=5).pdf}
-				\caption{$T = 0.5$ and $A \sim 10^{11}$.}
-			\end{subfigure}
-			\begin{subfigure}{0.4\linewidth}
-				\centering
-				\includegraphics[scale=0.8]{figures/numerical path integral (normalized) of a free particle with initial state as a Gaussian wave packet and T=1 (L=400, M=12000, N=10).pdf}
-				\caption{$T = 1$ and $A \sim 10^{11}$.}
-			\end{subfigure}
-			\caption{numerical path integral.}
+			\includegraphics[scale=0.8]{figures/numerical path integral (normalized) of a free particle with initial state as a Gaussian wave packet and T=1 (L=400, M=24000, N=10).pdf}
+			\caption{numerical path integral (normalized) at $T = 1$ with $A \sim 10^{18}, \Delta \phi \approx \pi + 0.7$.}
 		\end{figure}
 	\end{itemize}
 	
@@ -198,13 +189,7 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 		\end{equation}
 		其中 $\alpha \in \mathbb{C}$.
 		
-		\item 令 $m = \omega = 1$, 考虑初始条件为
-		\begin{equation}
-			\alpha = |\alpha| = 1
-		\end{equation}
-		的情况.
-		
-		\item 计算中可以让
+		\item 令 $m = \omega = 1$, 考虑初始条件为 $\alpha = |\alpha| = 1$ 的情况. 计算中可以让
 		\begin{equation}
 			K_{i j} = \sqrt{\frac{m}{2 \pi i \Delta t}} \exp \Big( i \frac{m}{2} \frac{(x_i - x_j)^2}{\Delta t} \Big) \frac{e^{- i \Delta t V(x_i)} + e^{- i \Delta t V(x_j)}}{2},
 		\end{equation}
@@ -218,7 +203,7 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 			\caption{numerical path integral at $T = \frac{\pi}{2}$.}
 		\end{figure}
 		
-		注意到, coherent state 用路径积分数值计算得到的结果具有正确的归一化系数 $A = 1$.
+		注意到, coherent state 用路径积分数值计算得到的结果具有正确的归一化系数 $A = 1$ 和相位.
 	\end{itemize}
 	
 	\appendix
@@ -227,43 +212,147 @@ psi_final = dx**(N + 1) * K_power @ psi_0
 	}
 	\section{coherent states}
 	\begin{itemize}
-		\item coherent states 是 annihilation operator 的本征态
+		\item 参考: \href{https://en.wikipedia.org/wiki/Coherent_state}{Wikipedia: Coherent state}, \href{https://en.wikipedia.org/wiki/Displacement_operator}{Wikipedia: Displacement operator}.
+		
+		\item coherent states, $\ket{\alpha}$, 是 annihilation operator 的本征态
 		\begin{equation}
 			\begin{dcases}
 				a \ket{\alpha} = \alpha \ket{\alpha}, \alpha \in \mathbb{C} \\
-				\ket{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{0}
-			\end{dcases}.
+				\ket{\alpha} = D(\alpha) \ket{0}
+			\end{dcases},
+		\end{equation}
+		其中 $D(\alpha)$ 是 displacement operator,
+		\begin{equation}
+			D(\alpha) := e^{\alpha a^\dag - \alpha^* a}.
 		\end{equation}
 		
-		\begin{tcolorbox}[title=proof:]
-			\begin{equation}
-				\begin{dcases}
+		\begin{tcolorbox}[title=calculation:]
+			\begin{align}
+				& \begin{dcases}
 					[a, (\alpha a^\dag - \alpha^* a)^n] = n \alpha (\alpha a^\dag - \alpha^* a)^{n - 1} \\
-					[a^\dag, (\alpha a^\dag - \alpha^* a)^n] = n \alpha^* (\alpha a^\dag - \alpha^* a)^{n - 1}
-				\end{dcases} \Longrightarrow \begin{dcases}
+					[a^\dag, (\alpha a^\dag - \alpha^* a)^n] = n \alpha^* (\alpha a^\dag - \alpha^* a)^{n - 1} \\
+					[a^\dag a, (\alpha a^\dag - \alpha^* a)^n] = n (\alpha a^\dag + \alpha^* a) (\alpha a^\dag - \alpha^* a)^{n - 1} - n (n - 1) |\alpha|^2 (\alpha a^\dag - \alpha^* a)^{n - 2}
+				\end{dcases} \notag \\
+				\Longrightarrow & \begin{dcases}
 					[a, e^{\alpha a^\dag - \alpha^* a}] = \alpha e^{\alpha a^\dag - \alpha^* a} \\
-					[a^\dag, e^{\alpha a^\dag - \alpha^* a}] = \alpha^* e^{\alpha a^\dag - \alpha^* a}
+					[a^\dag, e^{\alpha a^\dag - \alpha^* a}] = \alpha^* e^{\alpha a^\dag - \alpha^* a} \\
+					[a^\dag a, e^{\alpha a^\dag - \alpha^* a}] = (\alpha a^\dag + \alpha^* a - |\alpha|^2) e^{\alpha a^\dag - \alpha^* a}
 				\end{dcases},
-			\end{equation}
+			\end{align}
 			因此
-			\begin{equation}
+			\begin{equation} \label{A.4}
 				\begin{dcases}
 					a \ket{\alpha} = \cdots \\
-					a^\dag \ket{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{1} + \alpha^* \ket{\alpha}
+					a^\dag \ket{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{1} + \alpha^* \ket{\alpha} \\
+					a^\dag a \ket{\alpha} = \alpha a^\dag \ket{\alpha} \Longrightarrow \braket{\alpha | a^\dag a | \alpha} = |\alpha|^2 \braket{\alpha | \alpha}
 				\end{dcases}.
 			\end{equation}
 		\end{tcolorbox}
 		
-		\item 并且
+		\item displacement operator 是 unitary operator, 且满足
 		\begin{equation}
 			\begin{dcases}
-				\braket{n | \alpha} = \\
-				\braket{\alpha | \beta} = e^{- \frac{1}{2} (|\alpha|^2 + |\beta|^2 - 2 \alpha^* \beta)}
+				D(\alpha) := e^{\alpha a^\dag - \alpha^* a} = e^{- \frac{1}{2} |\alpha|^2} e^{\alpha a^\dag} e^{- \alpha^* a} = e^{\frac{1}{2} |\alpha|^2} e^{- \alpha^* a} e^{\alpha a^\dag} \\
+				D(\alpha) D(\beta) = e^{\frac{1}{2} (\alpha \beta^* - \alpha^* \beta)} D(\alpha + \beta) \\
+				D^\dag(\alpha) = D(- \alpha) \\
+				D^\dag(\alpha) a D(\alpha) = a + \alpha \\
+				D^\dag(\alpha) a^\dag D(\alpha) = a ^\dag + \alpha^*
 			\end{dcases}.
 		\end{equation}
 		
 		\begin{tcolorbox}[title=calculation:]
-			content...
+			首先
+			\begin{equation}
+				D^\dag(\alpha) = \sum_{n = 0}^\infty \frac{1}{n!} ((\alpha a^\dag - \alpha^* a)^\dag)^n = \sum_{n = 0}^\infty \frac{1}{n!} (\alpha^* a - \alpha a^\dag)^n = D(- \alpha),
+			\end{equation}
+			使用 BCH formula,
+			\begin{align}
+				& \begin{dcases}
+					e^A e^B = \exp \Big( A + B + \frac{1}{2} [A, B] + \frac{1}{12} [A, [A, B]] - \frac{1}{12} [B, [A, B]] + \cdots \Big) \\
+					e^A B e^{- A} = e^{\mathrm{ad}_A} B
+				\end{dcases} \notag \\
+				\Longrightarrow & \begin{dcases}
+					e^{\alpha a^\dag} e^{- \alpha^* a} = e^{\alpha a^\dag - \alpha^* a + \frac{1}{2} |\alpha|^2} \\
+					D(\alpha) D(\beta) = e^{\alpha a^\dag - \alpha^* a} e^{\beta a^\dag - \beta^* a} = D(\alpha + \beta) e^{\frac{1}{2} (\alpha \beta^* - \alpha^* \beta)} \\
+					D(\alpha) D(- \alpha) = 1 \\
+					e^{- (\alpha a^\dag - \alpha^* a)} a e^{\alpha a^\dag - \alpha^* a} = \exp(- \mathrm{ad}_{(\alpha a^\dag - \alpha^* a)}) a = a + \alpha \\
+					e^{- (\alpha a^\dag - \alpha^* a)} a^\dag e^{\alpha a^\dag - \alpha^* a} = \exp(- \mathrm{ad}_{(\alpha a^\dag - \alpha^* a)}) a^\dag = a^\dag + \alpha^*
+				\end{dcases}.
+			\end{align}
+		\end{tcolorbox}
+		
+		\item coherent states 满足
+		\begin{equation}
+			\begin{dcases}
+				\braket{\alpha | a^\dag a | \alpha} = |\alpha|^2 \braket{\alpha | \alpha} \\
+				\braket{n | \alpha} = \frac{\alpha^n}{\sqrt{n!}} \braket{0 | D(\alpha) | 0} = \frac{\alpha^n}{\sqrt{n!}} e^{- \frac{1}{2} |\alpha|^2} \\
+				\braket{\alpha | \beta} = \braket{0 | D(- \alpha) D(\beta) | 0} = e^{- \frac{1}{2} (|\alpha|^2 + |\beta|^2 - 2 \alpha^* \beta)}
+			\end{dcases}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=calculation:]
+			注意
+			\begin{equation}
+				\begin{dcases}
+					[a, (a^\dag)^n] = n (a^\dag)^{n - 1} \\
+					\braket{0 | a^n (a^\dag)^n | 0} = n!
+				\end{dcases} \Longrightarrow \ket{n} = \frac{(a^\dag)^n}{\sqrt{n!}} \ket{0},
+			\end{equation}
+			那么
+			\begin{equation}
+				\braket{n | \alpha} = \braket{n | e^{\alpha a^\dag - \alpha^* a} | 0} = \frac{1}{\sqrt{n!}} \sum_{m = 0}^\infty \frac{1}{m!} \braket{0 | a^n (\alpha a^\dag - \alpha^* a)^m | 0},
+			\end{equation}
+			其中
+			\begin{align}
+				\braket{0 | a^n (\alpha a^\dag - \alpha^* a)^m | 0} &= m \alpha \braket{0 | a^{n - 1} (\alpha a^\dag - \alpha^* a)^{m - 1} | 0} \notag \\
+				&= \begin{dcases}
+					0 & m < n \\
+					\frac{m! \alpha^n}{(m - n)!} \braket{0 | (\alpha a^\dag - \alpha^* a)^{m - n} | 0} & m \geq n
+				\end{dcases},
+			\end{align}
+			代入, 得
+			\begin{equation}
+				\braket{n | \alpha} = \frac{\alpha^n}{\sqrt{n!}} \braket{0 | D(\alpha) | 0},
+			\end{equation}
+			其中
+			\begin{align}
+				\braket{0 | D(\alpha) | 0} = \braket{0 | e^{- \frac{1}{2} |\alpha|^2} e^{\alpha a^\dag} e^{- \alpha^* a} | 0} = e^{- \frac{1}{2} |\alpha|^2}.
+			\end{align}
+		\end{tcolorbox}
+		
+		\item 因此
+		\begin{equation}
+			I = \frac{1}{\pi} \int d^2 \alpha \, \ket{\alpha} \bra{\alpha}, \quad d^2 \alpha \equiv d\mathrm{Re}(\alpha) d\mathrm{Im}(\alpha).
+		\end{equation}
+		
+		\begin{tcolorbox}[title=proof:]
+			考虑
+			\begin{align}
+				\int d^2 \alpha \, \braket{m | \alpha} \braket{\alpha | n} &= \frac{1}{\sqrt{m! n!}} \int d^2 \alpha \, \alpha^m (\alpha^*)^n e^{- |\alpha|^2} \notag \\
+				&= \frac{1}{\sqrt{m! n!}} \int_0^\infty r dr \int_0^{2 \pi} d\theta \, r^{m + n} e^{i (m - n) \theta} e^{- r^2} \notag \\
+				&= \begin{dcases}
+					0 & m \neq n \\
+					\frac{2 \pi}{n!} \int_0^\infty dr \, r^{2 n + 1} e^{- r^2} & m = n
+				\end{dcases} = \pi \delta_{m n}.
+			\end{align}
+		\end{tcolorbox}
+		
+		\item $a^\dag$ 没有 eigenket, 但有
+		\begin{equation}
+			a^\dag \ket{\alpha} \bra{\alpha} = \Big( \frac{\partial}{\partial \alpha} + \alpha^* \Big) \ket{\alpha} \bra{\alpha}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=proof:]
+			根据 \eqref{A.4}, 有
+			\begin{equation}
+				a^\dag \ket{\alpha} \bra{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{1} \bra{\alpha} + \alpha^* \ket{\alpha} \bra{\alpha},
+			\end{equation}
+			并且
+			\begin{align}
+				\frac{\partial}{\partial \alpha} \ket{\alpha} \bra{\alpha} &= \frac{\partial}{\partial \alpha} \Big( e^{\frac{1}{2} |\alpha|^2} e^{- \alpha^* a} e^{\alpha a^\dag} \ket{0} \bra{0} e^{- \frac{1}{2} |\alpha|^2} e^{- \alpha a^\dag} e^{\alpha^* a} \Big) \notag \\
+				&= D(\alpha) \Big( \frac{1}{2} \alpha^* + a^\dag \Big) \ket{0} \bra{\alpha} + \ket{\alpha} \bra{0} \Big( - \frac{1}{2} \alpha^* - a^\dag \Big) D(- \alpha) \notag \\
+				&= D(\alpha) \ket{1} \bra{\alpha} - \ket{\alpha} \bra{1} D(- \alpha)
+			\end{align}
 		\end{tcolorbox}
 	\end{itemize}
 \end{document}
