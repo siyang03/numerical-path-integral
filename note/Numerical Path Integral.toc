@@ -2,4 +2,6 @@
 \contentsline {subsection}{\numberline {1.1}Gaussian wave packet}{2}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}harmonic oscillator and coherent states}{2}{subsection.1.2}%
 \contentsline {section}{\numberline {A}coherent states and displacement operators}{3}{appendix.A}%
-\contentsline {section}{\numberline {B}eigenstate of the field operator $\phi (\vec {x})$}{5}{appendix.B}%
+\contentsline {section}{\numberline {B}simultaneous eigenstates of the field operators $\phi (\vec {x})$}{5}{appendix.B}%
+\contentsline {subsection}{\numberline {B.1}eigenstates of $\phi (0)$}{6}{subsection.B.1}%
+\contentsline {section}{\numberline {C}eigenstates of the field operators $\phi (\vec {x})$}{6}{appendix.C}%
