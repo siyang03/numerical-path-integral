@@ -1,0 +1,502 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\DeclareMathOperator{\arcsinh}{arcsinh}
+\usepackage{amssymb}
+\usepackage{wasysym} % for \astrosun and more!
+\usepackage{mathrsfs} % to use \mathscr{...}
+\usepackage{xcolor} % \textcolor{red}{...} & \mathcolor{red}{...}
+\usepackage{hyperref} %Automatically links \label and \ref commands; Always load last
+\hypersetup{
+	linktocpage,
+	colorlinks=true, % false: boxed links; true: colored links
+	linkcolor=red, % color of internal links
+	citecolor=blue, % color of links to bibliography
+	filecolor=magenta, % color of file links
+	urlcolor=purple, % color of external links
+} % hidelinks
+%----------------------------------------------------------------------
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}  % Clear all headers and footers
+
+% Redefine section mark to include section number and title
+\renewcommand{\sectionmark}[1]{%
+	\markboth{Section \thesection\ #1}{}%
+}
+
+\fancyhead[L]{\nouppercase{\leftmark}}  % Header always on the left
+\fancyfoot[C]{\thepage}                 % Centered page number
+%----------------------------------------------------------------------
+% English-only version: no CJK package or font dependency is required.
+% to handle a large project
+\usepackage{import}
+%----------------------------------------------------------------------
+\usepackage{indentfirst}
+\setlength{\parindent}{0em} % No first-line indentation
+%----------------------------------------------------------------------
+% horizontal line
+%\noindent\rule[0.5ex]{\linewidth}{0.5pt} % horizontal line
+\usepackage{dashrule}
+%\noindent\hdashrule[0.5ex]{\linewidth}{0.5pt}{1mm} % horizontal dashed line
+%----------------------------------------------------------------------
+\usepackage[breakable]{tcolorbox} % box with color; highlight text \colorbox{yellow}{...}
+\tcbset{breakable, colback=white, colframe=green!30!black, coltext=black!60!white, fonttitle=\bfseries}
+
+\usepackage{tabularx} % LaTeX table
+\usepackage{booktabs}
+
+\usepackage{float} % appropriate way to handle figures
+% example:
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[scale=1]{figures/file-name}
+%	\caption{...}
+%\end{figure}
+\usepackage{subcaption}
+% following David Tong's convention, one should always add a caption to figures, but not to tables.
+% use \vcenter{\hbox{\includegraphics[...]{...}}} to insert figures (e.g. Feynman diagrams) in equation environment.
+%----------------------------------------------------------------------
+\numberwithin{equation}{section}
+\allowdisplaybreaks % allow page breaks inside math environments globally
+
+\usepackage{braket}
+\usepackage{cancel}
+
+\usepackage{leftindex}
+\usepackage{tensor} % how to handle indeces: https://tex.stackexchange.com/questions/11542/left-and-right-subscript-superscript
+\usepackage{isotope} % e.g. \isotoe[4][2]{He} = helium-4
+
+\usepackage{simpler-wick} % to use Wick contraction
+%\usepackage[compat=1.1.0]{tikz-feynman}
+
+% use \, in math environment
+% except for texts embeded in math environment, use \ instead
+%----------------------------------------------------------------------
+\usepackage{listings}
+\lstset{
+	frame=single,
+	basicstyle=\ttfamily,
+	numbers=left,
+	numberstyle=\ttfamily,
+}
+%----------------------------------------------------------------------
+\usepackage{orcidlink}
+%----------------------------------------------------------------------
+\title{\Huge \textbf{Numerical Path Integral}}
+\author{Siyang Wan}
+\date{June 2, 2025}
+%----------------------------------------------------------------------
+\begin{document}
+	\maketitle
+	
+	\pdfbookmark[1]{\contentsname}{toc} % add pdf bookmark to the ToC
+	\tableofcontents
+	
+	\section{Path Integrals in Quantum Mechanics}
+	\begin{itemize}
+		\item Consider a system with Hamiltonian
+		\begin{equation}
+			H = \frac{p^2}{2 m} + V(x),
+		\end{equation}
+		The corresponding Lagrangian is
+		\begin{equation}
+			L = \frac{m}{2} \dot{x}^2 - V(x),
+		\end{equation}
+		and the initial state is $\ket{\psi_0}$.
+		
+		\item To calculate $\psi(T, x) = \braket{x | e^{- i H T} | \psi_0}$ using the path integral, we write
+		\begin{align}
+			\braket{x | e^{- i H T} | \psi_0} =& \int Dx \, e^{i \int_0^T dt \, L} \notag \\
+			=& \lim_{N \rightarrow \infty} \int dx_0 \, \psi_0(x_0) \int dx_{N + 1} \, \delta(x_{N + 1} - x) \notag \\
+			& \int dx_1 \cdots dx_N \, \exp \Big( i \sum_{i = 0}^N \Delta t \Big( \frac{m}{2} \Big( \frac{x_{i + 1} - x_i}{\Delta t} \Big)^2 - V(x_i) \Big) \Big),
+		\end{align}
+		where $\Delta t = \frac{T}{N + 1}$.
+		
+		\item For the numerical calculation, define
+		\begin{equation}
+			\begin{dcases}
+				x_i = \Big( \frac{2 i}{M} - 1 \Big) L, \Delta x = \frac{2 L}{M}, i = 0, \cdots, M \\
+				K_{i j} = \braket{x_i | e^{- i H \Delta t} | x_j} = \sqrt{\frac{m}{2 \pi i \Delta t}} \exp \Big( i \Big( \frac{m}{2} \frac{(x_i - x_j)^2}{\Delta t} - \Delta t V(x_i) \Big) \Big)
+			\end{dcases},
+		\end{equation}
+		Then
+		\begin{equation} \label{1.5}
+			\braket{x | e^{- i H T} | \psi_0} = \lim_{L, M, N \rightarrow \infty} (\Delta x)^{N + 1} \sum_{j = 0}^M (K^{N + 1})_{i j} \psi_0(x_j), \quad \text{with} \quad x_i = x \ll L.
+		\end{equation}
+	\end{itemize}
+	
+	\subsection{Gaussian Wave Packet}
+	\begin{itemize}
+		\item Consider a free particle with initial state
+		\begin{equation}
+			\psi_0(x) = \Big( \frac{2}{\pi} \Big)^{\frac{1}{4}} e^{- x^2 + i k_0 x}, \quad \braket{k | \psi_0} = \frac{1}{(2 \pi)^{1 / 4}} e^{- \frac{1}{4} (k - k_0)^2},
+		\end{equation}
+		The expected result is
+		\begin{equation}
+			\psi(t, x) = \Big( \frac{2}{\pi} \Big)^{\frac{1}{4}} \sqrt{\frac{m}{m + 2 i t}} \exp \Big( \frac{m}{m + 2 i t} (- x^2 + i k_0 x) - i \frac{k_0^2}{2 (m + 2 i t)} t \Big).
+		\end{equation}
+		
+		\item The fastest and most memory-efficient way to evaluate \eqref{1.5} is to apply $K$ successively to a vector, rather than compute powers of the matrix:
+		\begin{lstlisting}
+psi_final = psi_0
+for i in range(N+1):
+	psi_final = dx * K @ psi_final
+		\end{lstlisting}
+		The following two approaches are not recommended (although they produce a reasonably accurate wave packet for $T = 0.1, L = 300, M = 9000, N = 1$):
+		\begin{lstlisting}
+K_power = K
+for i in range(N):
+	K_power = K @ K_power
+psi_final = dx**(N + 1) * K_power @ psi_0
+		\end{lstlisting}
+		or
+		\begin{lstlisting}
+K_power = np.linalg.matrix_power(K, N + 1)
+psi_final = dx**(N + 1) * K_power @ psi_0
+		\end{lstlisting}
+		
+		\item In addition, numerical experience suggests that $\big| \Delta x \sqrt{\frac{m}{2 \pi i \Delta t}} \big|^2 \ll 1$ is needed; a value of order $10^{- 2}$ can be chosen.
+		
+		\item Setting $m = k_0 = 1$, we obtain the following numerical result. Here $A = \int dx \, \rho$ denotes the normalization factor obtained numerically:
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.8]{figures/numerical path integral (normalized) of a free particle with initial state as a Gaussian wave packet and T=1 (L=400, M=24000, N=10).pdf}
+			\caption{Normalized numerical path integral at $T = 1$, with $A \sim 10^{18}$ and $\Delta \phi \approx \pi + 0.7$.}
+		\end{figure}
+	\end{itemize}
+	
+	\subsection{Harmonic Oscillator and Coherent States}
+	\begin{itemize}
+		\item Consider coherent states of the harmonic oscillator:
+		\begin{equation}
+			\begin{dcases}
+				\psi^{(\alpha)}(t, x) = \Big( \frac{m \omega}{\pi} \Big)^{\frac{1}{4}} \exp \Big( - \frac{m \omega}{2} (x - \braket{x})^2 + i \braket{p} x + i \theta(t) \Big) \\
+				\braket{x} = \sqrt{\frac{2}{m \omega}} \mathrm{Re}(\alpha e^{- i \omega t}), \braket{p} = \sqrt{2 m \omega} \mathrm{Im}(\alpha e^{- i \omega t}) \\
+				\theta(t) = - \frac{\omega t}{2} - \mathrm{Re}(\alpha e^{- i \omega t}) \mathrm{Im}(\alpha e^{- i \omega t})
+			\end{dcases},
+		\end{equation}
+		where $\alpha \in \mathbb{C}$.
+		
+		\item Set $m = \omega = 1$ and consider the initial condition $\alpha = |\alpha| = 1$. In the numerical calculation, one can use
+		\begin{equation}
+			K_{i j} = \sqrt{\frac{m}{2 \pi i \Delta t}} \exp \Big( i \frac{m}{2} \frac{(x_i - x_j)^2}{\Delta t} \Big) \frac{e^{- i \Delta t V(x_i)} + e^{- i \Delta t V(x_j)}}{2},
+		\end{equation}
+		which gives a slight improvement in the numerical result.
+		
+		\item The numerical result is shown below:
+		
+		\begin{figure}[H]
+			\centering
+			\includegraphics[scale=0.8]{figures/numerical path integral (normalized) of a harmonic oscillator with initial state as a coherent state and T=frac{pi}{2} (L=30, M=16000, N=15).pdf}
+			\caption{Numerical path integral at $T = \frac{\pi}{2}$.}
+		\end{figure}
+		
+		Notice that the numerical path-integral result for a coherent state has the correct normalization factor $A = 1$ and phase.
+	\end{itemize}
+	
+	\appendix
+	\renewcommand{\sectionmark}[1]{%
+		\markboth{Appendix \thesection\ #1}{}%
+	}
+	\section{Coherent States and Displacement Operators}
+	\begin{itemize}
+		\item References: \href{https://en.wikipedia.org/wiki/Coherent_state}{Wikipedia: Coherent state}, \href{https://en.wikipedia.org/wiki/Displacement_operator}{Wikipedia: Displacement operator}.
+		
+		\item Coherent states $\ket{\alpha}$ are eigenstates of the annihilation operator:
+		\begin{equation}
+			\begin{dcases}
+				a \ket{\alpha} = \alpha \ket{\alpha}, \alpha \in \mathbb{C} \\
+				\ket{\alpha} = D(\alpha) \ket{0}
+			\end{dcases},
+		\end{equation}
+		where $D(\alpha)$ is the displacement operator,
+		\begin{equation}
+			D(\alpha) := e^{\alpha a^\dag - \alpha^* a}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=Calculation:]
+			\begin{align}
+				& \begin{dcases}
+					[a, (\alpha a^\dag - \alpha^* a)^n] = n \alpha (\alpha a^\dag - \alpha^* a)^{n - 1} \\
+					[a^\dag, (\alpha a^\dag - \alpha^* a)^n] = n \alpha^* (\alpha a^\dag - \alpha^* a)^{n - 1} \\
+					[a^\dag a, (\alpha a^\dag - \alpha^* a)^n] = n (\alpha a^\dag + \alpha^* a) (\alpha a^\dag - \alpha^* a)^{n - 1} - n (n - 1) |\alpha|^2 (\alpha a^\dag - \alpha^* a)^{n - 2}
+				\end{dcases} \notag \\
+				\Longrightarrow & \begin{dcases}
+					[a, e^{\alpha a^\dag - \alpha^* a}] = \alpha e^{\alpha a^\dag - \alpha^* a} \\
+					[a^\dag, e^{\alpha a^\dag - \alpha^* a}] = \alpha^* e^{\alpha a^\dag - \alpha^* a} \\
+					[a^\dag a, e^{\alpha a^\dag - \alpha^* a}] = (\alpha a^\dag + \alpha^* a - |\alpha|^2) e^{\alpha a^\dag - \alpha^* a}
+				\end{dcases},
+			\end{align}
+			Therefore,
+			\begin{equation} \label{A.4}
+				\begin{dcases}
+					a \ket{\alpha} = \cdots \\
+					a^\dag \ket{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{1} + \alpha^* \ket{\alpha} \\
+					a^\dag a \ket{\alpha} = \alpha a^\dag \ket{\alpha} \Longrightarrow \braket{\alpha | a^\dag a | \alpha} = |\alpha|^2 \braket{\alpha | \alpha}
+				\end{dcases}.
+			\end{equation}
+		\end{tcolorbox}
+		
+		\item The displacement operator is unitary and satisfies
+		\begin{equation}
+			\begin{dcases}
+				D(\alpha) := e^{\alpha a^\dag - \alpha^* a} = e^{- \frac{1}{2} |\alpha|^2} e^{\alpha a^\dag} e^{- \alpha^* a} = e^{\frac{1}{2} |\alpha|^2} e^{- \alpha^* a} e^{\alpha a^\dag} \\
+				D(\alpha) D(\beta) = e^{\frac{1}{2} (\alpha \beta^* - \alpha^* \beta)} D(\alpha + \beta) \\
+				D^\dag(\alpha) = D(- \alpha) \\
+				D^\dag(\alpha) a D(\alpha) = a + \alpha \\
+				D^\dag(\alpha) a^\dag D(\alpha) = a ^\dag + \alpha^*
+			\end{dcases}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=Calculation:]
+			First,
+			\begin{equation}
+				D^\dag(\alpha) = \sum_{n = 0}^\infty \frac{1}{n!} ((\alpha a^\dag - \alpha^* a)^\dag)^n = \sum_{n = 0}^\infty \frac{1}{n!} (\alpha^* a - \alpha a^\dag)^n = D(- \alpha),
+			\end{equation}
+			Using the Baker--Campbell--Hausdorff (BCH) formula,
+			\begin{align}
+				& \begin{dcases}
+					e^A e^B = \exp \Big( A + B + \frac{1}{2} [A, B] + \frac{1}{12} [A, [A, B]] - \frac{1}{12} [B, [A, B]] + \cdots \Big) \\
+					e^A B e^{- A} = e^{\mathrm{ad}_A} B
+				\end{dcases} \notag \\
+				\Longrightarrow & \begin{dcases}
+					e^{\alpha a^\dag} e^{- \alpha^* a} = e^{\alpha a^\dag - \alpha^* a + \frac{1}{2} |\alpha|^2} \\
+					D(\alpha) D(\beta) = e^{\alpha a^\dag - \alpha^* a} e^{\beta a^\dag - \beta^* a} = D(\alpha + \beta) e^{\frac{1}{2} (\alpha \beta^* - \alpha^* \beta)} \\
+					D(\alpha) D(- \alpha) = 1 \\
+					e^{- (\alpha a^\dag - \alpha^* a)} a e^{\alpha a^\dag - \alpha^* a} = \exp(- \mathrm{ad}_{(\alpha a^\dag - \alpha^* a)}) a = a + \alpha \\
+					e^{- (\alpha a^\dag - \alpha^* a)} a^\dag e^{\alpha a^\dag - \alpha^* a} = \exp(- \mathrm{ad}_{(\alpha a^\dag - \alpha^* a)}) a^\dag = a^\dag + \alpha^*
+				\end{dcases}.
+			\end{align}
+		\end{tcolorbox}
+		
+		\item Coherent states satisfy
+		\begin{equation}
+			\begin{dcases}
+				\braket{\alpha | a^\dag a | \alpha} = |\alpha|^2 \braket{\alpha | \alpha} \\
+				\braket{n | \alpha} = \frac{\alpha^n}{\sqrt{n!}} \braket{0 | D(\alpha) | 0} = \frac{\alpha^n}{\sqrt{n!}} e^{- \frac{1}{2} |\alpha|^2} \\
+				\braket{\alpha | \beta} = \braket{0 | D(- \alpha) D(\beta) | 0} = e^{- \frac{1}{2} (|\alpha|^2 + |\beta|^2 - 2 \alpha^* \beta)}
+			\end{dcases}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=Calculation:]
+			Note that
+			\begin{equation}
+				\begin{dcases}
+					[a, (a^\dag)^n] = n (a^\dag)^{n - 1} \\
+					\braket{0 | a^n (a^\dag)^n | 0} = n!
+				\end{dcases} \Longrightarrow \ket{n} = \frac{(a^\dag)^n}{\sqrt{n!}} \ket{0},
+			\end{equation}
+			Then
+			\begin{equation}
+				\braket{n | \alpha} = \braket{n | e^{\alpha a^\dag - \alpha^* a} | 0} = \frac{1}{\sqrt{n!}} \sum_{m = 0}^\infty \frac{1}{m!} \braket{0 | a^n (\alpha a^\dag - \alpha^* a)^m | 0},
+			\end{equation}
+			where
+			\begin{align}
+				\braket{0 | a^n (\alpha a^\dag - \alpha^* a)^m | 0} &= m \alpha \braket{0 | a^{n - 1} (\alpha a^\dag - \alpha^* a)^{m - 1} | 0} \notag \\
+				&= \begin{dcases}
+					0 & m < n \\
+					\frac{m! \alpha^n}{(m - n)!} \braket{0 | (\alpha a^\dag - \alpha^* a)^{m - n} | 0} & m \geq n
+				\end{dcases},
+			\end{align}
+			Substituting this expression gives
+			\begin{equation}
+				\braket{n | \alpha} = \frac{\alpha^n}{\sqrt{n!}} \braket{0 | D(\alpha) | 0},
+			\end{equation}
+			where
+			\begin{align}
+				\braket{0 | D(\alpha) | 0} = \braket{0 | e^{- \frac{1}{2} |\alpha|^2} e^{\alpha a^\dag} e^{- \alpha^* a} | 0} = e^{- \frac{1}{2} |\alpha|^2}.
+			\end{align}
+		\end{tcolorbox}
+		
+		\item Consequently,
+		\begin{equation}
+			I = \frac{1}{\pi} \int d^2 \alpha \, \ket{\alpha} \bra{\alpha}, \quad d^2 \alpha \equiv d\mathrm{Re}(\alpha) d\mathrm{Im}(\alpha).
+		\end{equation}
+		
+		\begin{tcolorbox}[title=Proof:]
+			Consider
+			\begin{align}
+				\int d^2 \alpha \, \braket{m | \alpha} \braket{\alpha | n} &= \frac{1}{\sqrt{m! n!}} \int d^2 \alpha \, \alpha^m (\alpha^*)^n e^{- |\alpha|^2} \notag \\
+				&= \frac{1}{\sqrt{m! n!}} \int_0^\infty r dr \int_0^{2 \pi} d\theta \, r^{m + n} e^{i (m - n) \theta} e^{- r^2} \notag \\
+				&= \begin{dcases}
+					0 & m \neq n \\
+					\frac{2 \pi}{n!} \int_0^\infty dr \, r^{2 n + 1} e^{- r^2} & m = n
+				\end{dcases} = \pi \delta_{m n}.
+			\end{align}
+		\end{tcolorbox}
+		
+		\item The creation operator $a^\dag$ has no eigenkets, but the following identity holds:
+		\begin{equation}
+			a^\dag \ket{\alpha} \bra{\alpha} = \Big( \frac{\partial}{\partial \alpha} + \alpha^* \Big) \ket{\alpha} \bra{\alpha}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=Proof:]
+			By \eqref{A.4},
+			\begin{equation}
+				a^\dag \ket{\alpha} \bra{\alpha} = e^{\alpha a^\dag - \alpha^* a} \ket{1} \bra{\alpha} + \alpha^* \ket{\alpha} \bra{\alpha},
+			\end{equation}
+			Moreover,
+			\begin{align}
+				\frac{\partial}{\partial \alpha} \ket{\alpha} \bra{\alpha} &= \frac{\partial}{\partial \alpha} \Big( e^{\frac{1}{2} |\alpha|^2} e^{- \alpha^* a} e^{\alpha a^\dag} \ket{0} \bra{0} e^{- \frac{1}{2} |\alpha|^2} e^{- \alpha a^\dag} e^{\alpha^* a} \Big) \notag \\
+				&= D(\alpha) \Big( \frac{1}{2} \alpha^* + a^\dag \Big) \ket{0} \bra{\alpha} + \ket{\alpha} \bra{0} \Big( - \frac{1}{2} \alpha^* - a^\dag \Big) D(- \alpha) \notag \\
+				&= D(\alpha) \ket{1} \bra{\alpha}.
+			\end{align}
+		\end{tcolorbox}
+	\end{itemize}
+	
+	\section{Simultaneous Eigenstates of the Field Operators \texorpdfstring{$\phi(\vec{x})$}{phi(x)}}
+	\begin{itemize}
+		\item The field operator can be written as
+		\begin{equation}
+			\phi(\vec{x}) = \int \frac{d^D k}{(2 \pi)^{D / 2} \sqrt{2 \omega_k}} (a_{\vec{k}} e^{i \vec{k} \cdot \vec{x}} + a^\dag_{\vec{k}} e^{- i \vec{k} \cdot \vec{x}}),
+		\end{equation}
+		Note also that
+		\begin{equation}
+			\begin{dcases}
+				[\phi(\vec{x}), \phi(\vec{y})] = 0 \\
+				[(a_{\vec{k}_1} e^{i \vec{k}_1 \cdot \vec{x}} + a^\dag_{\vec{k}_1} e^{- i \vec{k}_1 \cdot \vec{x}}), (a_{\vec{k}_2} e^{i \vec{k}_2 \cdot \vec{y}} + a^\dag_{\vec{k}} e^{- i \vec{k}_2 \cdot \vec{y}})] = i \delta^{(D)}(\vec{k}_1 - \vec{k}_2) \sin(\vec{k}_1 \cdot (\vec{x} - \vec{y}))
+			\end{dcases},
+		\end{equation}
+		We see that:
+		\begin{enumerate}
+			\item The operators $\phi(\vec{x})$ for all $\vec{x}$ have simultaneous eigenstates.
+			
+			\item The operators $\phi(\vec{x})$ and $(a_{\vec{k}} e^{i \vec{k} \cdot \vec{x}} + a^\dag_{\vec{k}} e^{- i \vec{k} \cdot \vec{x}})$, for all $\vec{k}$, have simultaneous eigenstates.
+			
+			\item The operators $\phi(\vec{y})$ and $(a_{\vec{k}} e^{i \vec{k} \cdot \vec{x}} + a^\dag_{\vec{k}} e^{- i \vec{k} \cdot \vec{x}})$ do not have simultaneous eigenstates when $\vec{x} \neq \vec{y}$.
+		\end{enumerate}
+		
+		\item Introduce the translation operator
+		\begin{equation}
+			U(\vec{x}) = e^{- i \vec{P} \cdot \vec{x}}, \quad \vec{P} = \int d^D k \, \vec{k} a^\dag_{\vec{k}} a_{\vec{k}},
+		\end{equation}
+		Then
+		\begin{equation}
+			\phi(\vec{x}) = U(\vec{x}) \phi(0) U^\dag(\vec{x}).
+		\end{equation}
+		
+		\item Thus, it suffices to first find the eigenstates of $\phi(0)$ and then construct a linear combination such that
+		\begin{equation}
+			\begin{dcases}
+				\phi(0) \ket{\lambda} = \lambda(0) \ket{\lambda} \\
+				U(\vec{x}) \ket{\lambda} = \ket{\lambda}
+			\end{dcases},
+		\end{equation}
+		This yields simultaneous eigenstates of all field operators.
+	\end{itemize}
+	
+	\subsection{Eigenstates of \texorpdfstring{$\phi(0)$}{phi(0)}}
+	\begin{itemize}
+		\item Define
+		\begin{equation}
+			\begin{dcases}
+				p_{\vec{k}} = \frac{a_{\vec{k}} - a^\dag_{\vec{k}}}{\sqrt{2} i} \\
+				q_{\vec{k}} = \frac{a_{\vec{k}} + a^\dag_{\vec{k}} }{\sqrt{2}}
+			\end{dcases},
+		\end{equation}
+		Then
+		\begin{equation}
+			\phi(0) = \int \frac{d^D k}{(2 \pi)^{D / 2} \sqrt{\omega_k}} q_{\vec{k}}.
+		\end{equation}
+		
+		\item Note that
+		\begin{equation}
+			\begin{dcases}
+				[q_{\vec{k}_1}, p_{\vec{k}_2}] = i \delta^{(D)}(\vec{k}_1 - \vec{k}_2) \\
+				a^\dag_{\vec{k}} a_{\vec{k}} + \frac{1}{2} \delta^{(D)}(0) = \frac{1}{2} (p^2_{\vec{k}} + q^2_{\vec{k}})
+			\end{dcases}.
+		\end{equation}
+		
+		\item Let
+		\begin{equation}
+			\ket{q_{\vec{k}}} \in \mathrm{span}(\ket{n_{\vec{k}}}, n_{\vec{k}} = 0, 1, \cdots),
+		\end{equation}
+		Then (for a one-dimensional harmonic oscillator with $m \omega = 1 / \delta^{(D)}(0)$),
+		\begin{equation}
+			\psi_{n_{\vec{k}}}(q_{\vec{k}}) = \braket{q_{\vec{k}} | n_{\vec{k}}} = \Big( \frac{\delta^{(D)}(0)}{\pi} \Big)^{\frac{1}{4}} \frac{1}{\sqrt{2^{n_{\vec{k}}} n_{\vec{k}}!}} H_{n_{\vec{k}}}(\sqrt{\delta^{(D)}(0)} q_{\vec{k}}) e^{- \frac{\delta^{(D)}(0) q_{\vec{k}}^2}{2}},
+		\end{equation}
+		Therefore,
+		\begin{equation}
+			\braket{q_{\vec{k}} | 0} = \delta(\vec{q}_{\vec{k}})
+		\end{equation}
+	\end{itemize}
+	
+	\section{Eigenstates of the Field Operators \texorpdfstring{$\phi(\vec{x})$}{phi(x)}}
+	\begin{itemize}
+		\item The field operator can be expressed as
+		\begin{equation}
+			\phi(\vec{x}) = \int \frac{d^D k}{(2 \pi)^{D / 2} \sqrt{2 \omega_k}} (a_{\vec{k}} e^{i \vec{k} \cdot \vec{x}} + a^\dag_{\vec{k}} e^{- i \vec{k} \cdot \vec{x}}),
+		\end{equation}
+		and $[\phi(\vec{x}), \phi(\vec{y})] = 0$.
+		
+		\item First, we need to find the eigenstates of the Hermitian operator
+		\begin{equation} \label{B.2}
+			a_{\vec{k}} e^{i \vec{k} \cdot \vec{x}} + a^\dag_{\vec{k}} e^{- i \vec{k} \cdot \vec{x}}
+		\end{equation}
+		.
+		
+		\item Define
+		\begin{equation}
+			\begin{dcases}
+				p_{\vec{k}} = \frac{a_{\vec{k}} e^{i \vec{k} \cdot \vec{x}} - a^\dag_{\vec{k}} e^{- i \vec{k} \cdot \vec{x}}}{\sqrt{2} i} \\
+				q_{\vec{k}} = \frac{a_{\vec{k}} e^{i \vec{k} \cdot \vec{x}} + a^\dag_{\vec{k}} e^{- i \vec{k} \cdot \vec{x}}}{\sqrt{2}}
+			\end{dcases}, \quad a^\dag_{\vec{k}} a_{\vec{k}} + \frac{1}{2} = \frac{1}{2} (p_{\vec{k}}^2 + q_{\vec{k}}^2),
+		\end{equation}
+		Thus, $\phi(\vec{x})$ can be written as
+		\begin{equation}
+			\begin{dcases}
+				\phi(\vec{x}) = \int \frac{d^D k}{(2 \pi)^{D / 2} \sqrt{\omega_k}} q_{\vec{k}} \\
+				[q_{\vec{k}_1}, q_{\vec{k}_2}] = i \delta^{(D)}(\vec{k}_1 - \vec{k}_2) \sin((\vec{k}_1 - \vec{k}_2) \cdot \vec{x}) = 0
+			\end{dcases},
+		\end{equation}
+		The eigenstates of $q_{\vec{k}}$ are given by
+		\begin{equation}
+			\begin{dcases}
+				\hat{q}_{\vec{k}} \ket{q_{\vec{k}}} = q_{\vec{k}} \ket{q_{\vec{k}}} \\
+				e^{- i n_{\vec{k}} \vec{k} \cdot \vec{x}} \braket{n_{\vec{k}} | q_{\vec{k}}} = \psi^*_{n_{\vec{k}}}(q_{\vec{k}})
+			\end{dcases}, \quad q_{\vec{k}} \in \mathbb{R},
+		\end{equation}
+		where
+		\begin{equation}
+			\begin{dcases}
+				\ket{n_{\vec{k}}} = \frac{(a^\dag_{\vec{k}})^n}{\sqrt{n_{\vec{k}}!}} \ket{0} \\
+				\psi_n(q) = \psi^*_n(q) = \frac{1}{\pi^{1 / 4} \sqrt{2^n n!}} H_n(q) e^{- \frac{q^2}{2}} \\
+				H_n(q) = (- 1)^n e^{q^2} \frac{d^n}{dq^n} e^{- q^2}
+			\end{dcases}.
+		\end{equation}
+		
+		\begin{tcolorbox}[title=Remark:]
+			Note that
+			\begin{align}
+				\braket{p | n} &= \frac{1}{\sqrt{2 \pi}} \tilde{\psi}_n(p) = \int dq \, \frac{e^{- i p q}}{\sqrt{2 \pi}} \psi_n(q) \notag \\
+				&= \frac{1}{\pi^{1 / 4} \sqrt{2^n n!}} \frac{1}{\sqrt{2 \pi}} \int dq \, e^{- i p q - \frac{q^2}{2}} H_n(q), 
+			\end{align}
+			where
+			\begin{equation} \label{B.7}
+				\int dq \, e^{- i p q - \frac{q^2}{2}} H_n(q) = (- i)^n \sqrt{2 \pi} H_n(p) e^{- \frac{p^2}{2}},
+			\end{equation}
+			Therefore,
+			\begin{equation}
+				\braket{p | n} = \frac{1}{\sqrt{2 \pi}} \tilde{\psi}_n(p) = (- i)^n \frac{1}{\pi^{1 / 4} \sqrt{2^n n!}} H_n(p) e^{- \frac{p^2}{2}} = (- i)^n \psi_n(p).
+			\end{equation}
+			
+			\noindent\rule[0.5ex]{\linewidth}{0.5pt} % horizontal line
+			
+			\textbf{Proof of \eqref{B.7}:}
+			
+			Using the generating function for the Hermite polynomials (see \href{https://en.wikipedia.org/wiki/Hermite_polynomials#Generating_function}{Wikipedia: Hermite polynomials}),
+			\begin{equation}
+				e^{2 x t - t^2} = \sum_{n = 0}^\infty \frac{H_n(x)}{n!} t^n,
+			\end{equation}
+			we obtain
+			\begin{equation}
+				\int dq \, e^{- i p q - \frac{q^2}{2} + (2 q t - t^2)} = \sqrt{2 \pi} e^{- 2 i p t + t^2} e^{- \frac{p^2}{2}} = \sqrt{2 \pi} e^{- \frac{p^2}{2}} \sum_{n = 0}^\infty \frac{H_n(p)}{n!} (- i t)^n.
+			\end{equation}
+		\end{tcolorbox}
+	\end{itemize}
+\end{document}

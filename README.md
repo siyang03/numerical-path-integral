@@ -1,3 +1,3 @@
 # Numerical Path Integral
 
-[**Read the Numerical Path Integral notes (PDF)**](note/Numerical%20Path%20Integral.pdf)
+[**Read the Numerical Path Integral notes (PDF)**](Note/Numerical%20Path%20Integral%20-%20English.pdf)
